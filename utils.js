@@ -12,6 +12,10 @@ utils.printProgress = (count, max) => {
     const percent = utils.formatPercent(count / max);
     process.stdout.write(count + "/" + max + " (" + percent + ")");
 };
+//function to filter uniques CEPs
+utils.uniqueCEP = (value, index, array) => {
+    return array.indexOf(value) === index;
+};
 
 //exports
 if (typeof module != "undefined") {

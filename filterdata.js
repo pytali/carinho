@@ -3,11 +3,6 @@ const { mysqlConn } = require("./dbconn"); // import dbconn
 const buscaCEP = require("./api"); // import api cep
 const utils = require("./utils"); // import utils
 
-//function to filter uniques CEPs
-const uniqueCEP = (value, index, array) => {
-    return array.indexOf(value) === index;
-};
-
 //fetch data  from database
 const getAllData = async () => {
     // function used for merger the three databases
@@ -33,7 +28,7 @@ const getAllData = async () => {
         cep.push(value.cep);
     }
 
-    return { cep: cep.filter(uniqueCEP) }; // filter unique ceps
+    return { cep: cep.filter(utils.uniqueCEP) }; // filter unique ceps
 
     //return data[0];
 };
@@ -58,22 +53,22 @@ const buscaBairros = async () => {
         if (fetchedData.total === 0) continue; // if error, break the loop and pass to next
 
         // only tests
-        /*
+
         console.log(
             value || "",
             fetchedData.dados[0].bairro || "",
             fetchedData.dados[0].localidade || ""
         );
-        */
+
         // put the values in veronica
-        await mysqlConn.veronica.execute(
-            "INSERT IGNORE INTO BAIRRO_CLIENTES_VERONICA(cep, bairro, localidade) VALUES (? ,? , ?)",
-            [
-                value || "",
-                fetchedData.dados[0].bairro || "",
-                fetchedData.dados[0].localidade || "",
-            ]
-        );
+        // await mysqlConn.veronica.execute(
+        //     "INSERT IGNORE INTO BAIRRO_CLIENTES_VERONICA(cep, bairro, localidade) VALUES (? ,? , ?)",
+        //     [
+        //         value || "",
+        //         fetchedData.dados[0].bairro || "",
+        //         fetchedData.dados[0].localidade || "",
+        //     ]
+        // );
     }
     mysqlConn.veronica.end();
     //bairros.push(dataBairros.bairro);
