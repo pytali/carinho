@@ -53,22 +53,22 @@ const buscaBairros = async () => {
         if (fetchedData.total === 0) continue; // if error, break the loop and pass to next
 
         // only tests
-
+        /*
         console.log(
             value || "",
             fetchedData.dados[0].bairro || "",
             fetchedData.dados[0].localidade || ""
         );
-
+        */
         // put the values in veronica
-        // await mysqlConn.veronica.execute(
-        //     "INSERT IGNORE INTO BAIRRO_CLIENTES_VERONICA(cep, bairro, localidade) VALUES (? ,? , ?)",
-        //     [
-        //         value || "",
-        //         fetchedData.dados[0].bairro || "",
-        //         fetchedData.dados[0].localidade || "",
-        //     ]
-        // );
+        await mysqlConn.veronica.execute(
+            "INSERT IGNORE INTO BAIRRO_CLIENTES_VERONICA(cep, bairro, localidade) VALUES (? ,? , ?)",
+            [
+                value || "",
+                fetchedData.dados[0].bairro || "",
+                fetchedData.dados[0].localidade || "",
+            ]
+        );
     }
     mysqlConn.veronica.end();
     //bairros.push(dataBairros.bairro);
