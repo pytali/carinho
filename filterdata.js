@@ -43,12 +43,12 @@ function delay(ms) {
     return new Promise((resolve, _reject) => setTimeout(resolve, ms));
 }
 
-// trata os dados de cep
+// Process the data of CEP
 const buscaBairros = async () => {
     const bairros = [];
-    const data = await getAllData(); // retorna os dados do banco
+    const data = await getAllData(); // return processed data of BD
     for (const [idx, value] of data.cep.entries()) {
-        await delay(180); // aplica um delay entre 1 e outra requisicao
+        await delay(180); // append dalay in the loop between requests
         const fetchedData = await buscaCEP.correiosAPI(value); // return data from API
 
         //const [dataBairros] = fetchedData.dados;
