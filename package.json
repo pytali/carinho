@@ -1,5 +1,9 @@
 {
-  "name": "carinho",
+  "name": "@pytali/carinho",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pytali/carinho.git"
+  },
   "version": "1.0.1",
   "description": "",
   "main": "filterdata.js",
