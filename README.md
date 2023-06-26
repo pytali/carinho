@@ -70,7 +70,7 @@ A aplicação Carinho desempenha um papel importante no tratamento de dados vind
 
 ## Documentação de Instalação
 
-Esta documentação fornecerá instruções passo a passo para instalar a aplicação Carinho utilizando o Node.js.
+Esta documentação fornecerá instruções passo a passo para instalar a aplicação **Carinho** para o Node.js
 
 ### Pré-requisitos
 
