@@ -111,10 +111,10 @@ Certifique-se de ter as configurações corretas do ambiente para a aplicação 
 Exemplo de conteúdo do arquivo `.env`:
 
 ```plaintext
-DB_HOST=seu-host
-DB_USER=seu-usuario
-DB_PASSWORD=sua-senha
-DB_DATABASE=seu-banco-de-dados
+MYSQL_DB_HOST=seu-host
+MYSQL_DB_USER=seu-usuario
+MYSQL_DB_PASSWORD=sua-senha
+MYSQL_DB_DATABASE=seu-banco-de-dados
 ```
 
 Substitua `seu-host`, `seu-usuario`, `sua-senha` e `seu-banco-de-dados` pelas informações corretas do seu ambiente de banco de dados.
