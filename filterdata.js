@@ -29,7 +29,7 @@ const getAllData = async () => {
 
     const cep = [];
 
-    for (const [idx, value] of newdata.entries()) {
+    for (const [_idx, value] of newdata.entries()) {
         cep.push(value.cep);
     }
 
