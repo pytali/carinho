@@ -36,7 +36,7 @@ Agora que conhecemos os módulos principais do Carinho, vamos entender como eles
 
 2\. Uma vez conectado ao banco de dados, o Carinho executa uma chamada SQL para recuperar os dados necessários do ERP IXC. Esses dados são recebidos no formato de tabela e concatenados, caso haja mais de uma base de dados com a função nativa do JS chamada `concat()`.
 
-3\. A aplicação inicia o processo de tratamento dos dados recebidos. O Carinho extrai a coluna de CEP da tabela e os unifica através da função `uniqueCEP()`, onde espera um parâmetro em formato **"00000-000"** para fazer a tratativa.
+3\. A aplicação inicia o processo de tratamento dos dados recebidos. O Carinho extrai a coluna de CEP da tabela e os unifica através da função `filter(utils.uniqueCEP)`, onde espera um array com os CEPs para fazer a tratativa.
 
 4\. Com os CEPs extraídos, formatados corretamente e unicos, a aplicação utiliza a função `correiosAPI()` filha da função `buscaBairros()` para realizar uma chamada para a API dos Correios. Essa função envia os CEPs e recebe como resposta os dados de localidade e bairro relacionados a cada CEP. Com delay entre uma requisição e outra especificado com a função:
 
