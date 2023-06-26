@@ -32,17 +32,35 @@ Durante todo o processo de tratamento dos dados e integração com a API dos Cor
 
 Agora que conhecemos os módulos principais do Carinho, vamos entender como eles interagem entre si para realizar a funcionalidade da aplicação passo a passo.
 
-1\. A aplicação estabelece a conexão com o banco de dados IXC por meio da função `mysqlConn()`. Essa função utiliza as credenciais de acesso ao banco de dados para criar uma conexão. Essas credenciais estão armazenadas em um arquivo de variavel de ambiente.
+1\. A aplicação estabelece a conexão com o banco de dados IXC por meio da função `getAllData()` onde conecta em todos os Banco de Dados através da função filha `data()`. Essa função utiliza as credenciais de acesso ao banco de dados para criar uma conexão. Essas credenciais estão armazenadas em um arquivo de variavel de ambiente e especificadas na função `mysqlConn()`.
 
-2\. Uma vez conectado ao banco de dados, o Carinho executa uma chamada SQL para recuperar os dados necessários do ERP IXC. Esses dados são recebidos no formato de tabelas.
+2\. Uma vez conectado ao banco de dados, o Carinho executa uma chamada SQL para recuperar os dados necessários do ERP IXC. Esses dados são recebidos no formato de tabela e concatenados, caso haja mais de uma base de dados com a função nativa do JS chamada `concat()`.
 
-3\. A aplicação inicia o processo de tratamento dos dados recebidos. O Carinho extrai a coluna de CEP de cada tabela e os unifica através da função `uniqueCEP()`, onde espera um parâmetro em formato **"00000-000"** para fazer a tratativa.
+3\. A aplicação inicia o processo de tratamento dos dados recebidos. O Carinho extrai a coluna de CEP da tabela e os unifica através da função `uniqueCEP()`, onde espera um parâmetro em formato **"00000-000"** para fazer a tratativa.
 
-4\. Com os CEPs extraídos, formatados corretamente e unicos, a aplicação utiliza a função `correiosAPI()` para realizar uma chamada para a API dos Correios. Essa função envia os CEPs e recebe como resposta os dados de localidade e bairro relacionados a cada CEP.
+4\. Com os CEPs extraídos, formatados corretamente e unicos, a aplicação utiliza a função `correiosAPI()` filha da função `buscaBairros()` para realizar uma chamada para a API dos Correios. Essa função envia os CEPs e recebe como resposta os dados de localidade e bairro relacionados a cada CEP. Com delay entre uma requisição e outra especificado com a função:
+
+```js
+function delay(ms) {
+    return new Promise((resolve, _reject) => setTimeout(resolve, ms));
+}
+```
+
+Onde espera um parâmetro `ms` em milissegundos. Com a seguinte sintaxe:
+
+```js
+await delay(180);
+```
 
 5\. Com os dados de localidade e bairro obtidos da API dos Correios, o Carinho insere esses dados em uma nova tabela no banco de dados Veronica. Essa tabela possui as colunas CEP, Bairro e Localidade.
 
-6\. Durante todo esse processo, a aplicação atualiza a barra de progresso visual exibindo a porcentagem de conclusão da operação. O usuário pode acompanhar o progresso em tempo real e ter uma noção de quanto tempo ainda falta para a conclusão.
+6\. Durante todo esse processo, a aplicação atualiza a barra de progresso visual exibindo a porcentagem de conclusão da operação. O usuário pode acompanhar o progresso em tempo real e ter uma noção de quanto tempo ainda falta para a conclusão. Esse processo se dá através da função iniciada no loop:
+
+```js
+const utils = require("./utils");
+...
+utils.printProgress(idx, data.cep.length * 1);
+```
 
 ## Conclusão
 
